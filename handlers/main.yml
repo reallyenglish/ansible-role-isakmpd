@@ -1,0 +1,6 @@
+---
+
+- name: Restart isakmpd_config
+  service:
+    name: isakmpd
+    state: restarted

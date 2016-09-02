@@ -1,0 +1,6 @@
+---
+
+- name: Install isakmpd
+  pkgng:
+    name: isakmpd
+    state: present

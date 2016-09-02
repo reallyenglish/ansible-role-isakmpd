@@ -1,0 +1,37 @@
+---
+# tasks file for ansible-role-isakmpd
+
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- include: install-FreeBSD.yml
+  when: ansible_os_family == 'FreeBSD'
+
+- name: Create log directory
+  file:
+    path: "{{ isakmpd_log_dir }}"
+    mode: 0755
+    owner: "{{ isakmpd_user }}"
+    group: "{{ isakmpd_group }}"
+    state: directory
+  notify: Restart isakmpd
+
+- name: Create db directory
+  file:
+    path: "{{ isakmpd_db_dir }}"
+    mode: 0755
+    owner: "{{ isakmpd_user }}"
+    group: "{{ isakmpd_group }}"
+    state: directory
+  notify: Restart isakmpd
+
+- name: Create isakmpd.conf
+  template:
+    src: isakmpd.conf.j2
+    dest: "{{ isakmpd_conf }}"
+  notify: Restart isakmpd
+
+- name: Start isakmpd
+  service:
+    name: "{{ isakmpd_service }}"
+    enabled: true
+    state: started

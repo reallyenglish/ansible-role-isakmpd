@@ -1,0 +1,5 @@
+- hosts: localhost
+  roles:
+    - ansible-role-isakmpd
+  vars:
+    isakmpd_config: ""

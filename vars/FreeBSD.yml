@@ -1,0 +1,2 @@
+__isakmpd_db_dir: /var/db/isakmpd
+__isakmpd_conf: /usr/local/etc/isakmpd.conf
