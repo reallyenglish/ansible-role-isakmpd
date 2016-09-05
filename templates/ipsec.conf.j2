@@ -1,0 +1,17 @@
+{% for k, v in isakmpd_addresses.iteritems() %}
+{{ k }} = "{{ v }}"
+{% endfor %}
+
+{% for peer in isakmpd_flows %}
+# {{ peer }}
+{% if isakmpd_flows[peer].type == 'site' %}
+{% set flow = isakmpd_default_flow.site | combine(isakmpd_flows[peer], recursive=True) %}
+ike esp from $me to ${{ peer }} peer ${{ peer }} \
+  main auth {{ flow.main.auth_algorithm }} enc {{ flow.main.enc_algorithm }} group {{ flow.main.group }} \
+  quick auth {{ flow.quick.auth_algorithm }} enc {{ flow.quick.enc_algorithm }} \
+{% if 'psk' in flow %}
+  psk {{ flow.psk }}
+{% endif %}
+
+{% endif %}
+{% endfor %}
