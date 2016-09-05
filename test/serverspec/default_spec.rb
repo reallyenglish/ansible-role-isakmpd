@@ -11,6 +11,7 @@ ports   = [ 500, 4500 ]
 describe file('/etc/rc.conf.local') do
   it { should be_file }
   its(:content) { should match /isakmpd_flags=-K/ }
+  its(:content) { should match /ipsec=YES/ }
 end
 
 describe file(config) do

@@ -5,6 +5,12 @@
 
 - include: "install-{{ ansible_os_family }}.yml"
 
+- name: Enable ipsec
+  service:
+    name: ipsec
+    enabled: true
+  when: "{{ ansible_os_family == 'OpenBSD' }}"
+
 - name: Create ipsec.conf
   template:
     src: ipsec.conf.j2
