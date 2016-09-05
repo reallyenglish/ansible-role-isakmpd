@@ -1,0 +1,4 @@
+isakmpd_flows:
+  gw1:
+    type: site
+    psk: password

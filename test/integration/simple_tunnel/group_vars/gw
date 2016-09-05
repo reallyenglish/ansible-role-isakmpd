@@ -1,0 +1,6 @@
+pf_rule: |
+  pass all
+isakmpd_addresses:
+  gw1: 192.168.52.101
+  gw2: 192.168.52.102
+  me: "{{ ansible_em1.ipv4[0].address }}"
