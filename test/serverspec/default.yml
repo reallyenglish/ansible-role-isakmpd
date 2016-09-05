@@ -3,12 +3,12 @@
     - ansible-role-isakmpd
   vars:
     isakmpd_addresses:
-      gw2_dcjp02: 202.229.140.41
-      vpn2_jp: 49.212.14.146
-      me: 202.229.140.41
+      peer1: 192.168.68.1
+      peer2: 192.168.68.2
+      me: 192.168.68.1
 
     isakmpd_flows:
-      gw2_dcjp02:
+      peer2:
         type: site
         psk: password
       client:
