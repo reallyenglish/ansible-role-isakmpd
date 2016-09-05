@@ -13,5 +13,15 @@ ike esp from $me to ${{ peer }} peer ${{ peer }} \
   psk {{ flow.psk }}
 {% endif %}
 
+{% elif isakmpd_flows[peer].type == 'l2tp' %}
+{% set flow = isakmpd_default_flow.l2tp | combine(isakmpd_flows[peer], recursive=True) %}
+ike passive esp transport \
+  proto udp from $me to any port 1701 \
+  main auth {{ flow.main.auth_algorithm }} enc {{ flow.main.enc_algorithm }} group {{ flow.main.group }} \
+  quick auth {{ flow.quick.auth_algorithm }} enc {{ flow.quick.enc_algorithm }} \
+{% if 'psk' in flow %}
+  psk {{ flow.psk }}
+{% endif %}
+
 {% endif %}
 {% endfor %}
