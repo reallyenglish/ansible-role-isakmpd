@@ -16,7 +16,8 @@
     src: ipsec.conf.j2
     dest: "{{ isakmpd_conf }}"
     mode: 0600
-  notify: Restart isakmpd
+  notify:
+    - Restart isakmpd
 
 - name: Start isakmpd
   service:
@@ -24,3 +25,5 @@
     enabled: true
     state: started
     arguments: "{{ isakmpd_flags }}"
+  notify:
+    - Reload ipsec.conf

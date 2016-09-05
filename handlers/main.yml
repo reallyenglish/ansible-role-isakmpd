@@ -2,5 +2,9 @@
 
 - name: Restart isakmpd
   service:
-    name: isakmpd
+    name: "{{ isakmpd_service }}"
     state: restarted
+  notify: Reload ipsec.conf
+
+- name: Reload ipsec.conf
+  command: "ipsecctl -f {{ isakmpd_conf }}"
