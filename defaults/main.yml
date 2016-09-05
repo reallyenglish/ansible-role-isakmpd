@@ -3,6 +3,7 @@ isakmpd_group: "{{ __isakmpd_group }}"
 isakmpd_service: isakmpd
 isakmpd_conf: "{{ __isakmpd_conf }}"
 isakmpd_flags: "-K"
+isakmpd_conf_dir: /etc/pf.conf.d
 
 isakmpd_addresses:
 

@@ -11,6 +11,19 @@
     enabled: true
   when: "{{ ansible_os_family == 'OpenBSD' }}"
 
+- name: Create a directory for anchor flagments
+  file:
+    path: "{{ isakmpd_conf_dir }}"
+    state: directory
+
+- name: Create pf anchor file
+  template:
+    src: pf.conf.anchor.j2
+    dest: "{{ isakmpd_conf_dir }}/ipsec_anchor.pf"
+    mode: 0600
+    validate: "pfctl -n -f %s -a ipsec"
+  notify: Reload pf anchor
+
 - name: Create ipsec.conf
   template:
     src: ipsec.conf.j2
