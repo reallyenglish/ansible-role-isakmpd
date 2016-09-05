@@ -42,10 +42,10 @@ Vagrant.configure("2") do |config|
   config.vm.box = "trombik/ansible-openbsd-5.9-amd64"
 
   [ 1, 2 ].each do |index|
-    config.vm.define "vpn#{index}" do |c|
-      ip = "192.168.52.20#{index}"
+    config.vm.define "gw#{index}" do |c|
+      ip = "192.168.52.10#{index}"
       c.vm.network "private_network", ip: ip
-      c.vm.hostname = "vpn#{index}.virtualbox.reallyenglish.com"
+      c.vm.hostname = "gw#{index}.virtualbox.reallyenglish.com"
       c.vm.provision :ansible do |ansible|
         ansible.limit = ip
         ansible.playbook = "site.yml"
