@@ -23,7 +23,7 @@ node ('virtualbox') {
     try {
       // use native rake instead of bundle exec rake
       // https://github.com/docker-library/ruby/issues/73
-      sh 'rake test
+      sh 'rake test'
     } finally {
       sh 'rake clean'
     }
