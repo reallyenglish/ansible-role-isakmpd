@@ -8,6 +8,11 @@ user    = '_isakmpd'
 group   = '_isakmpd'
 ports   = [ 500, 4500 ]
 
+describe file('/etc/rc.conf.local') do
+  it { should be_file }
+  its(:content) { should match /isakmpd_flags=-K/ }
+end
+
 describe file(config) do
   it { should be_file }
   its(:content) { should match /^ike esp from \$me to \$gw2_dcjp02 peer \$gw2_dcjp02 \\/ }
@@ -31,6 +36,6 @@ end
 
 ports.each do |p|
   describe port(p) do
-    it should be_listening.with('udp')
+    it { should be_listening.with('udp') }
   end
 end
