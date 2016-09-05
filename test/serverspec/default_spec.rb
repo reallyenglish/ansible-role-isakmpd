@@ -16,7 +16,7 @@ end
 describe file(config) do
   it { should be_file }
   its(:content) { should match /^ike esp from \$me to \$gw2_dcjp02 peer \$gw2_dcjp02 \\/ }
-  its(:content) { should match /^  main auth hmac-sha1 enc aes-128 \\/ }
+  its(:content) { should match /^  main auth hmac-sha1 enc aes-128 group modp1024 \\/ }
   its(:content) { should match /^  quick auth hmac-sha1 enc aes-128 \\/ }
   its(:content) { should match /^  psk password/ }
 
