@@ -29,7 +29,7 @@ platforms:
         shell: '/bin/sh'
     provisioner:
       extra_vars:
-      ansible_python_interpreter: '/usr/local/bin/python'
+        ansible_python_interpreter: '/usr/local/bin/python'
 
 suites:
   - name: default
