@@ -1,0 +1,23 @@
+- hosts: localhost
+  roles:
+    - ansible-role-isakmpd
+  vars:
+    isakmpd_addresses:
+      gw2_dcjp02: 202.229.140.41
+      vpn2_jp: 49.212.14.146
+      me: 202.229.140.41
+
+    isakmpd_flows:
+      gw2_dcjp02:
+        type: site
+        psk: password
+      client:
+        type: l2tp
+        main:
+          auth_algorithm: hmac-sha1
+          enc_algorithm: 3des
+          group: modp1024
+        quick:
+          auth_algorithm: hmac-sha2-256
+          enc_algorithm: aes
+        psk: password

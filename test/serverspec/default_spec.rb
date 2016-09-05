@@ -3,47 +3,25 @@ require 'serverspec'
 
 package = 'isakmpd'
 service = 'isakmpd'
-config  = '/etc/isakmpd/isakmpd.conf'
-user    = 'isakmpd'
-group   = 'isakmpd'
-ports   = [ PORTS ]
-log_dir = '/var/log/isakmpd'
-db_dir  = '/var/lib/isakmpd'
-
-case os[:family]
-when 'freebsd'
-  config = '/usr/local/etc/isakmpd.conf'
-  db_dir = '/var/db/isakmpd'
-end
-
-describe package(package) do
-  it { should be_installed }
-end 
+config  = '/etc/ipsec.conf'
+user    = '_isakmpd'
+group   = '_isakmpd'
+ports   = [ 500, 4500 ]
 
 describe file(config) do
   it { should be_file }
-  its(:content) { should match Regexp.escape('isakmpd') }
-end
+  its(:content) { should match /^ike esp from \$me to \$gw2_dcjp02 peer \$gw2_dcjp02 \\/ }
+  its(:content) { should match /^  main auth hmac-sha1 enc aes-128 \\/ }
+  its(:content) { should match /^  quick auth hmac-sha1 enc aes-128 \\/ }
+  its(:content) { should match /^  psk password/ }
 
-describe file(log_dir) do
-  it { should exist }
-  it { should be_mode 755 }
-  it { should be_owned_by user }
-  it { should be_grouped_into group }
-end
+  its(:content) { should match /^ike passive esp transport \\/ }
+  its(:content) { should match /^  proto udp from \$me to any port 1701 \\/ }
+  its(:content) { should match /^  main auth hmac-sha1 enc 3des group modp1024 \\/ }
+  its(:content) { should match /^  quick auth hmac-sha2-256 enc aes \\/ }
+  its(:content) { should match /^  psk password$/ }
 
-describe file(db_dir) do
-  it { should exist }
-  it { should be_mode 755 }
-  it { should be_owned_by user }
-  it { should be_grouped_into group }
-end
 
-case os[:family]
-when 'freebsd'
-  describe file('/etc/rc.conf.d/isakmpd') do
-    it { should be_file }
-  end
 end
 
 describe service(service) do
@@ -53,6 +31,6 @@ end
 
 ports.each do |p|
   describe port(p) do
-    it { should be_listening }
+    it should be_listening.with('udp')
   end
 end
