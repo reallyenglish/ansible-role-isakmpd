@@ -8,3 +8,6 @@
 
 - name: Reload ipsec.conf
   command: "ipsecctl -f {{ isakmpd_conf }}"
+
+- name: Reload pf anchor
+  command: "pfctl -f {{ isakmpd_conf_dir }}/ipsec_anchor.pf  -a ipsec_anchor"

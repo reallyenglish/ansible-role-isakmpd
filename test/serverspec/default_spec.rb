@@ -7,6 +7,26 @@ config  = '/etc/ipsec.conf'
 user    = '_isakmpd'
 group   = '_isakmpd'
 ports   = [ 500, 4500 ]
+conf_dir = '/etc/pf.conf.d'
+
+describe file(conf_dir) do
+  it { should be_directory }
+end
+
+describe file("#{ conf_dir }/ipsec_anchor.pf") do
+  it { should be_file }
+  its(:content) { should match /pass in quick on egress proto udp from \$isakmpd_me to <ipsec_peers> port \{ 500, 4500 \}/ }
+  its(:content) { should match /pass in quick on egress proto udp from \$isakmpd_me to any port \{ 500, 4500 \}/ }
+end
+
+describe command('pfctl -sA') do
+  its(:stdout) { should match /ipsec_anchor/ }
+end
+
+describe command('pfctl -sr -a ipsec_anchor') do
+  its(:stdout) { should match Regexp.escape('pass in quick on egress inet proto udp from 192.168.68.1 to any port = 500') }
+  its(:stdout) { should match Regexp.escape('pass in quick on egress inet proto udp from 192.168.68.1 to any port = 4500') }
+end
 
 describe file('/etc/rc.conf.local') do
   it { should be_file }
@@ -26,8 +46,6 @@ describe file(config) do
   its(:content) { should match /^  main auth hmac-sha1 enc 3des group modp1024 \\/ }
   its(:content) { should match /^  quick auth hmac-sha2-256 enc aes \\/ }
   its(:content) { should match /^  psk password$/ }
-
-
 end
 
 describe service(service) do
