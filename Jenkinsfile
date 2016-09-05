@@ -19,16 +19,14 @@ node ('virtualbox') {
     } finally {
       sh 'bundle exec kitchen destroy'
     }
-/* comment out if you have integration tests
     stage 'integration'
     try {
       // use native rake instead of bundle exec rake
       // https://github.com/docker-library/ruby/issues/73
-      sh 'rake TEST_TASK
+      sh 'rake test'
     } finally {
-      sh 'rake CLEANUP_TASK'
+      sh 'rake clean'
     }
-*/
     stage 'Notify'
     step([$class: 'GitHubCommitNotifier', resultOnFailure: 'FAILURE'])
   }
