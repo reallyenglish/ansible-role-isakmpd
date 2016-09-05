@@ -17,4 +17,4 @@
     name: "{{ isakmpd_service }}"
     enabled: true
     state: started
-    arguments: {{ isakmpd_flags }}
+    arguments: "{{ isakmpd_flags }}"
