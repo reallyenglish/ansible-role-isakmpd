@@ -1,0 +1,3 @@
+__isakmpd_user: _isakmpd
+__isakmpd_group: _isakmpd
+__isakmpd_conf: /etc/ipsec.conf

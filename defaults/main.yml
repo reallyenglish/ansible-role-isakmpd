@@ -1,7 +1,28 @@
-isakmpd_user: isakmpd
-isakmpd_group: isakmpd
-isakmpd_log_dir: /var/log/isakmpd
-isakmpd_db_dir: "{{ __isakmpd_db_dir }}"
+isakmpd_user: "{{ __isakmpd_user }}"
+isakmpd_group: "{{ __isakmpd_group }}"
 isakmpd_service: isakmpd
 isakmpd_conf: "{{ __isakmpd_conf }}"
-isakmpd_flags: ""
+isakmpd_flags: "-K"
+
+isakmpd_addresses:
+
+isakmpd_flows: {}
+
+# defaults for a flow
+isakmpd_default_flow:
+  site:
+    main:
+      auth_algorithm: hmac-sha1
+      enc_algorithm: aes-128
+      group: modp1024
+    quick:
+      auth_algorithm: hmac-sha1
+      enc_algorithm: aes-128
+  l2tp:
+    main:
+      auth_algorithm: hmac-sha1
+      enc_algorithm: aes-128
+      group: modp1024
+    quick:
+      auth_algorithm: hmac-sha1
+      enc_algorithm: aes-128
