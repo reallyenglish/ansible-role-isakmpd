@@ -1,3 +1,4 @@
+me = "{{ isakmpd_listen_address }}"
 {% for k, v in isakmpd_addresses.iteritems() %}
 {{ k }} = "{{ v }}"
 {% endfor %}
