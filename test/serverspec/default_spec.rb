@@ -36,6 +36,9 @@ end
 
 describe file(config) do
   it { should be_file }
+
+  its(:content) { should match Regexp.escape('me = "192.168.68.1"') }
+
   its(:content) { should match /^ike esp from \$me to \$peer2 peer \$peer2 \\/ }
   its(:content) { should match /^  main auth hmac-sha1 enc aes-128 group modp1024 \\/ }
   its(:content) { should match /^  quick auth hmac-sha1 enc aes-128 \\/ }

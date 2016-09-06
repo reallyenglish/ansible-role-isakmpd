@@ -1,4 +1,4 @@
-isakmpd_me = "{{ isakmpd_addresses['me'] }}"
+isakmpd_me = "{{ isakmpd_listen_address }}"
 pass in quick on egress proto udp from $isakmpd_me to <ipsec_peers> port { 500, 4500 }
 {% for k in isakmpd_flows %}
 {% if isakmpd_flows[k].type == 'l2tp' %}

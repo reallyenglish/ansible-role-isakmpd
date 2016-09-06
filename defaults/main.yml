@@ -5,6 +5,7 @@ isakmpd_conf: "{{ __isakmpd_conf }}"
 isakmpd_flags: "-K"
 isakmpd_conf_dir: /etc/pf.conf.d
 
+isakmpd_listen_address: ""
 isakmpd_addresses:
 
 isakmpd_flows: {}
