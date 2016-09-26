@@ -29,6 +29,7 @@
     src: ipsec.conf.j2
     dest: "{{ isakmpd_conf }}"
     mode: 0600
+    validate: "ipsecctl -n -f %s"
   notify:
     - Restart isakmpd
 
