@@ -11,6 +11,8 @@
       peer2:
         type: site
         psk: password
+        main:
+          lifetime: 10m
       client:
         type: l2tp
         main:

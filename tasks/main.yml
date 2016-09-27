@@ -29,8 +29,26 @@
     src: ipsec.conf.j2
     dest: "{{ isakmpd_conf }}"
     mode: 0600
+    # XXX you cannot validate it with ipsecctl(8) because ipsecctl(8) checks
+    # the owner of given file (vagrant) and fails if it is not the current user
+    # (root). when validating, ansible copies the generated file to tmp as a
+    # user vagrant and executes validate command as root.
+    #
+    # validate: "ipsecctl -n -f %s"
+    backup: yes
+  register: register_ipsec_conf
   notify:
     - Restart isakmpd
+
+- shell: "find /etc/ -iname '{{ isakmpd_conf }}.*@*~' -type f | sort | head -n 3 | xargs -r -n 1 rm"
+  # When ipsec.conf is created or updated, cleanup last three copies of
+  # ipsec.conf.
+  changed_when: false
+  when: "{{ register_ipsec_conf.changed }}"
+
+- command: "ipsecctl -n -f {{ isakmpd_conf }}"
+  changed_when: false
+  when: "{{ register_ipsec_conf.changed }}"
 
 - name: Start isakmpd
   service:
