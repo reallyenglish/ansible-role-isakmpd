@@ -13,12 +13,15 @@
         psk: password
         main:
           lifetime: 10m
+        quick:
+          lifetime: 3600
       client:
         type: l2tp
         main:
           auth_algorithm: hmac-sha1
           enc_algorithm: 3des
           group: modp1024
+          lifetime: 1200
         quick:
           auth_algorithm: hmac-sha2-256
           enc_algorithm: aes
