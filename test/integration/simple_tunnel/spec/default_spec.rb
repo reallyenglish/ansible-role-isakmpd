@@ -28,7 +28,8 @@ context 'after provisioning finished' do
         # esp tunnel from 192.168.52.101 to 192.168.52.102 spi 0x98f12547 auth hmac-sha1 enc aes
         expect(result).to match /^esp tunnel from #{dst} to #{src} spi 0x[0-9a-z]+ auth hmac-sha1 enc aes/
         expect(result).to match /^esp tunnel from #{src} to #{dst} spi 0x[0-9a-z]+ auth hmac-sha1 enc aes/
-        expect(result.split("\n").length).to eq 2
+        # there is a race when both hosts create flows, resulting 4 SAs
+        expect(result.split("\n").length).to satisfy { |v| v == 2 or v == 4 }
       end
     end
   end
