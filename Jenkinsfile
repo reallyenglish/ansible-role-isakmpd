@@ -21,7 +21,7 @@ node ('virtualbox') {
 
     stage 'bundle exec kitchen test'
     try {
-      sh 'bundle exec kitchen test'
+      sh 'bundle exec kitchen test -l debug'
     } catch (e) {
         currentBuild.result = 'FAILURE'
         notifyBuild(currentBuild.result)
