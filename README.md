@@ -24,6 +24,14 @@ Role Variables
 | isakmpd\_flows | the flows | {} |
 | isakmpd\_default\_flow | defaults for site and l2tp types of isakmpd\_flows | {"site"=>{"main"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}, "quick"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "lifetime"=>nil}}, "l2tp"=>{"main"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}, "quick"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "lifetime"=>nil}}} |
 
+## OpenBSD
+
+| Variable | Default |
+|----------|---------|
+| \_\_isakmpd\_user  | \_isakmpd |
+| \_\_isakmpd\_group | \_isakmpd |
+| \_\_isakmpd\_conf  | /etc/ipsec.conf |
+
 Dependencies
 ------------
 
