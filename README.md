@@ -1,7 +1,7 @@
 ansible-role-isakmpd
 =====================
 
-A brief description of the role goes here.
+Configure OpenBSD isakmpd.
 
 Requirements
 ------------
@@ -11,9 +11,18 @@ None
 Role Variables
 --------------
 
-| variable | description | default |
+| Variable | Description | Default |
 |----------|-------------|---------|
-
+| isakmpd\_user | user name of the daemon | {{ \_\_isakmpd\_user }} |
+| isakmpd\_group | group name of the daemon | {{ \_\_isakmpd\_group }} |
+| isakmpd\_service | service name | isakmpd |
+| isakmpd\_conf | path to `ipsec.conf`. | {{ \_\_isakmpd\_conf }} |
+| isakmpd\_flags | flags for the daemon | -K |
+| isakmpd\_conf\_dir | directory of file that the role creates as an anchor (beta) | /etc/pf.conf.d |
+| isakmpd\_listen\_address | address for the daemon to bind to | "" |
+| isakmpd\_addresses | a dict of address lists that is used in isakmpd\_flows | "" |
+| isakmpd\_flows | the flows | {} |
+| isakmpd\_default\_flow | defaults for site and l2tp types of isakmpd\_flows | {"site"=>{"main"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}, "quick"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "lifetime"=>nil}}, "l2tp"=>{"main"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}, "quick"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "lifetime"=>nil}}} |
 
 Dependencies
 ------------
@@ -23,6 +32,36 @@ None
 Example Playbook
 ----------------
 
+```yaml
+- hosts: localhost
+  roles:
+    - ansible-role-isakmpd
+  vars:
+    isakmpd_listen_address: 192.168.68.1
+    isakmpd_addresses:
+      peer1: 192.168.68.1
+      peer2: 192.168.68.2
+
+    isakmpd_flows:
+      peer2:
+        type: site
+        psk: password
+        main:
+          lifetime: 10m
+        quick:
+          lifetime: 3600
+      client:
+        type: l2tp
+        main:
+          auth_algorithm: hmac-sha1
+          enc_algorithm: 3des
+          group: modp1024
+          lifetime: 1200
+        quick:
+          auth_algorithm: hmac-sha2-256
+          enc_algorithm: aes
+        psk: password
+```
 
 License
 -------
