@@ -3,7 +3,7 @@ require 'spec_helper'
 class ServiceNotReady < StandardError
 end
 
-sleep ENV['JENKINS_HOME'] ? 30 : 15
+sleep ENV['JENKINS_HOME'] ? 20 : 15
 
 context 'after provisioning finished' do
 
