@@ -12,7 +12,7 @@ node ('virtualbox') {
   dir("$directory") {
     stage 'bundle'
     try {
-        sh 'bundle install --path vendor/bundle'
+        sh "bundle install --path ${env.JENKINS_HOME}/vendor/bundle"
     } catch (e) {
         currentBuild.result = 'FAILURE'
         notifyBuild(currentBuild.result)
