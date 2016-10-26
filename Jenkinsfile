@@ -1,4 +1,5 @@
 node ('virtualbox') {
+
   def directory = "ansible-role-isakmpd"
   env.ANSIBLE_VAULT_PASSWORD_FILE = "~/.ansible_vault_key"
   stage 'Clean up'
@@ -74,3 +75,4 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
   hipchatSend (color: color, notify: true, message: summary)
 }
+/* vim: ft=groovy */
