@@ -58,14 +58,6 @@ end
 
 ports.each do |p|
   describe port(p) do
-    it do
-      pending('serverspec does not work with netstat in OpenBSD')
-      # sudo -p 'Password: ' /bin/sh -c netstat\ -nat\ -f\ inet\ \|\ egrep\ \'\(\(tcp\|udp\).\*.4500.\*LISTEN\$\)\'
-      #
-      # where the command returns:
-      # udp          0      0  *.4500                 *.*                   
-      #
-      should be_listening.with('udp')
-    end
+    it { should be_listening.with('udp') }
   end
 end
