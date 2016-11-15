@@ -40,13 +40,15 @@
   notify:
     - Restart isakmpd
 
-- shell: "find /etc/ -iname '{{ isakmpd_conf }}.*@*~' -type f | sort | head -n 3 | xargs -r -n 1 rm"
+- name: Find backup copy of ipsec.conf
+  shell: "find /etc/ -iname '{{ isakmpd_conf }}.*@*~' -type f | sort | head -n 3 | xargs -r -n 1 rm"
   # When ipsec.conf is created or updated, cleanup last three copies of
   # ipsec.conf.
   changed_when: false
   when: "{{ register_ipsec_conf.changed }}"
 
-- command: "ipsecctl -n -f {{ isakmpd_conf }}"
+- name: Validate ipsec.conf
+  command: "ipsecctl -n -f {{ isakmpd_conf }}"
   changed_when: false
   when: "{{ register_ipsec_conf.changed }}"
 
