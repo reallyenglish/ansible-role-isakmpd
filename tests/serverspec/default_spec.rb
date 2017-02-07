@@ -41,13 +41,13 @@ describe file(config) do
 
   its(:content) { should match /^ike esp from \$me to \$peer2 peer \$peer2 \\/ }
   its(:content) { should match /^  main auth hmac-sha1 enc aes-128 group modp1024 lifetime 10m \\/ }
-  its(:content) { should match /^  quick auth hmac-sha1 enc aes-128 lifetime 3600 \\/ }
+  its(:content) { should match /^  quick auth hmac-sha1 enc aes-128 group modp1024 lifetime 3600 \\/ }
   its(:content) { should match /^  psk password/ }
 
   its(:content) { should match /^ike passive esp transport \\/ }
   its(:content) { should match /^  proto udp from \$me to any port 1701 \\/ }
   its(:content) { should match /^  main auth hmac-sha1 enc 3des group modp1024 lifetime 1200 \\/ }
-  its(:content) { should match /^  quick auth hmac-sha2-256 enc aes \\/ }
+  its(:content) { should match /^  quick auth hmac-sha2-256 enc aes group modp1024 \\/ }
   its(:content) { should match /^  psk password$/ }
 end
 
