@@ -9,7 +9,7 @@ me = "{{ isakmpd_listen_address }}"
 {% set flow = isakmpd_default_flow.site | combine(isakmpd_flows[peer], recursive=True) %}
 ike esp from $me to ${{ peer }} peer ${{ peer }} \
   main auth {{ flow.main.auth_algorithm }} enc {{ flow.main.enc_algorithm }} group {{ flow.main.group }}{% if flow.main.lifetime != none %} lifetime {{ flow.main.lifetime }}{% endif %} \
-  quick auth {{ flow.quick.auth_algorithm }} enc {{ flow.quick.enc_algorithm }}{% if flow.quick.lifetime != none %} lifetime {{ flow.quick.lifetime }}{% endif %} \
+  quick auth {{ flow.quick.auth_algorithm }} enc {{ flow.quick.enc_algorithm }} group {{ flow.quick.group }}{% if flow.quick.lifetime != none %} lifetime {{ flow.quick.lifetime }}{% endif %} \
 {% if 'psk' in flow %}
   psk {{ flow.psk }}
 {% endif %}
@@ -19,7 +19,7 @@ ike esp from $me to ${{ peer }} peer ${{ peer }} \
 ike passive esp transport \
   proto udp from $me to any port 1701 \
   main auth {{ flow.main.auth_algorithm }} enc {{ flow.main.enc_algorithm }} group {{ flow.main.group }}{% if flow.main.lifetime != none %} lifetime {{ flow.main.lifetime }}{% endif %} \
-  quick auth {{ flow.quick.auth_algorithm }} enc {{ flow.quick.enc_algorithm }}{% if flow.quick.lifetime != none %} lifetime {{ flow.quick.lifetime }}{% endif %} \
+  quick auth {{ flow.quick.auth_algorithm }} enc {{ flow.quick.enc_algorithm }} group {{ flow.quick.group }}{% if flow.quick.lifetime != none %} lifetime {{ flow.quick.lifetime }}{% endif %} \
 {% if 'psk' in flow %}
   psk {{ flow.psk }}
 {% endif %}

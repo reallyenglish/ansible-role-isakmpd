@@ -21,6 +21,7 @@ isakmpd_default_flow:
     quick:
       auth_algorithm: hmac-sha1
       enc_algorithm: aes-128
+      group: modp1024
       lifetime: Null
   l2tp:
     main:
@@ -31,4 +32,5 @@ isakmpd_default_flow:
     quick:
       auth_algorithm: hmac-sha1
       enc_algorithm: aes-128
+      group: modp1024
       lifetime: Null

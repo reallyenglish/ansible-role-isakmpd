@@ -19,7 +19,7 @@ None
 | isakmpd\_listen\_address | address for the daemon to bind to | "" |
 | isakmpd\_addresses | a dict of address lists that is used in isakmpd\_flows | "" |
 | isakmpd\_flows | the flows | {} |
-| isakmpd\_default\_flow | defaults for site and l2tp types of isakmpd\_flows | {"site"=>{"main"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}, "quick"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "lifetime"=>nil}}, "l2tp"=>{"main"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}, "quick"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "lifetime"=>nil}}} |
+| isakmpd\_default\_flow | defaults for site and l2tp types of isakmpd\_flows | {"site"=>{"main"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}, "quick"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}}, "l2tp"=>{"main"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}, "quick"=>{"auth\_algorithm"=>"hmac-sha1", "enc\_algorithm"=>"aes-128", "group"=>"modp1024", "lifetime"=>nil}}} |
 
 ## OpenBSD
 
@@ -63,6 +63,7 @@ None
         quick:
           auth_algorithm: hmac-sha2-256
           enc_algorithm: aes
+          group: modp1024
         psk: password
 ```
 

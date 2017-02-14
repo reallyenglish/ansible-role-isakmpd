@@ -25,4 +25,5 @@
         quick:
           auth_algorithm: hmac-sha2-256
           enc_algorithm: aes
+          group: modp1024
         psk: password
