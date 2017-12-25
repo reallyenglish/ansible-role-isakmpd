@@ -23,7 +23,7 @@ provisioner:
 platforms:
   - name: openbsd-5.9-amd64
     driver:
-      box: trombik/ansible-openbsd-5.9-amd64
+      box: mitsuruy/ansible-openbsd-5.9-amd64
       box_check_update: false
     driver_config:
       ssh:
@@ -34,7 +34,7 @@ platforms:
 
   - name: openbsd-6.0-amd64
     driver:
-      box: trombik/ansible-openbsd-6.0-amd64
+      box: mitsuruy/ansible-openbsd-6.0-amd64
       box_check_update: false
     driver_config:
       ssh:

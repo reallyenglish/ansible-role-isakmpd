@@ -1,34 +1,34 @@
-require 'spec_helper'
-require 'serverspec'
+require "spec_helper"
+require "serverspec"
 
-package = 'isakmpd'
-service = 'isakmpd'
-config  = '/etc/ipsec.conf'
-user    = '_isakmpd'
-group   = '_isakmpd'
-ports   = [ 500, 4500 ]
-conf_dir = '/etc/pf.conf.d'
+package = "isakmpd"
+service = "isakmpd"
+config  = "/etc/ipsec.conf"
+user    = "_isakmpd"
+group   = "_isakmpd"
+ports   = [500, 4500]
+conf_dir = "/etc/pf.conf.d"
 
 describe file(conf_dir) do
   it { should be_directory }
 end
 
-describe file("#{ conf_dir }/ipsec_anchor.pf") do
+describe file("#{conf_dir}/ipsec_anchor.pf") do
   it { should be_file }
   its(:content) { should match /pass in quick on egress proto udp from \$isakmpd_me to <ipsec_peers> port \{ 500, 4500 \}/ }
   its(:content) { should match /pass in quick on egress proto udp from \$isakmpd_me to any port \{ 500, 4500 \}/ }
 end
 
-describe command('pfctl -sA') do
+describe command("pfctl -sA") do
   its(:stdout) { should match /ipsec_anchor/ }
 end
 
-describe command('pfctl -sr -a ipsec_anchor') do
-  its(:stdout) { should match Regexp.escape('pass in quick on egress inet proto udp from 192.168.68.1 to any port = 500') }
-  its(:stdout) { should match Regexp.escape('pass in quick on egress inet proto udp from 192.168.68.1 to any port = 4500') }
+describe command("pfctl -sr -a ipsec_anchor") do
+  its(:stdout) { should match Regexp.escape("pass in quick on egress inet proto udp from 192.168.68.1 to any port = 500") }
+  its(:stdout) { should match Regexp.escape("pass in quick on egress inet proto udp from 192.168.68.1 to any port = 4500") }
 end
 
-describe file('/etc/rc.conf.local') do
+describe file("/etc/rc.conf.local") do
   it { should be_file }
   its(:content) { should match /isakmpd_flags=-K/ }
   its(:content) { should match /ipsec=YES/ }
@@ -58,6 +58,6 @@ end
 
 ports.each do |p|
   describe port(p) do
-    it { should be_listening.with('udp') }
+    it { should be_listening.with("udp") }
   end
 end
